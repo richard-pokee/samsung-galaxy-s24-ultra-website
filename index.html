@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>Samsung Galaxy S24 Ultra</title>
+    <style>
+        :root {
+            --primary-color: #1428a0;
+            --secondary-color: #00c7d1;
+            --accent-color: #ff6900;
+            --text-color: #333;
+            --light-gray: #f5f5f7;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #767676;
+            --white: #ffffff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            padding: 50px 0;
+            background: linear-gradient(to right, var(--white), var(--light-gray));
+        }
+
+        .hero-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .hero-text p {
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 20px 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #0f1e7a;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--light-gray);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .product-image-container {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: zoom-in;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+        .image-zoom-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .zoomed-image {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-zoom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .thumbnail-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            cursor: pointer;
+            object-fit: cover;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .thumbnail:hover, .thumbnail.active {
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .features {
+            padding: 50px 0;
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .specs {
+            padding: 50px 0;
+            background-color: var(--light-gray);
+        }
+
+        .specs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .specs-chart {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .specs-table {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            background-color: var(--primary-color);
+            border-radius: 5px 5px 0 0;
+            transition: height 1s ease-in-out;
+        }
+
+        .bar-1 {
+            left: 10%;
+            height: 0;
+        }
+
+        .bar-2 {
+            left: 30%;
+            height: 0;
+        }
+
+        .bar-3 {
+            left: 50%;
+            height: 0;
+        }
+
+        .bar-4 {
+            left: 70%;
+            height: 0;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .reviews {
+            padding: 50px 0;
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .review-stats {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .rating {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stars {
+            color: gold;
+            font-size: 1.5rem;
+        }
+
+        .review-filters {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px;
+            background-color: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .review-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .reviewer {
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: gold;
+            margin-bottom: 10px;
+        }
+
+        .review-text {
+            color: var(--text-color);
+        }
+
+        .review-form-container {
+            margin-top: 50px;
+        }
+
+        .review-form {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .star-input {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star-input i {
+            font-size: 1.5rem;
+            color: var(--medium-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .star-input i.active, .star-input i:hover {
+            color: gold;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .hero-content {
+                flex-direction: column-reverse;
+            }
+
+            .hero-image {
+                margin-bottom: 30px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .reviews-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader::after {
+            content: \"\";
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--medium-gray);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class=\"loader\" id=\"loader\"></div>
+    
+    <header>
+        <div class=\"container nav-container\">
+            <a href=\"#\" class=\"logo\">Samsung</a>
+            <button class=\"mobile-menu-btn\" id=\"mobileMenuBtn\">☰</button>
+            <ul class=\"nav-links\" id=\"navLinks\">
+                <li><a href=\"#\">Home</a></li>
+                <li><a href=\"#features\">Features</a></li>
+                <li><a href=\"#specs\">Specs</a></li>
+                <li><a href=\"#reviews\">Reviews</a></li>
+                <li><a href=\"#\" class=\"btn btn-primary\">Buy Now</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class=\"hero\">
+        <div class=\"container hero-content\">
+            <div class=\"hero-text fade-in\">
+                <h1>Samsung Galaxy S24 Ultra</h1>
+                <p>Experience the next level of smartphone innovation with the Galaxy S24 Ultra. Featuring a stunning 6.8-inch Dynamic AMOLED 2X display, powerful Snapdragon 8 Gen 3 processor, and an advanced quad camera system with 200MP main sensor.</p>
+                <div class=\"price\">$1,299.99</div>
+                <div class=\"cta-buttons\">
+                    <button class=\"btn btn-primary\">Add to Cart</button>
+                    <button class=\"btn btn-secondary\">Learn More</button>
+                </div>
+            </div>
+            <div class=\"hero-image fade-in\">
+                <div class=\"product-image-container\">
+                    <img src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bzkcmea-thumb-537234464\" alt=\"Samsung Galaxy S24 Ultra\" class=\"product-image\" id=\"mainProductImage\">
+                </div>
+                <div class=\"thumbnail-container\">
+                    <img src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bzkcmea-thumb-537234464\" alt=\"Samsung Galaxy S24 Ultra Black\" class=\"thumbnail active\" data-src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bzkcmea-thumb-537234464\">
+                    <img src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bztcmea-thumb-537234452\" alt=\"Samsung Galaxy S24 Ultra Titanium\" class=\"thumbnail\" data-src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bztcmea-thumb-537234452\">
+                    <img src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bzvhmea-thumb-537234458\" alt=\"Samsung Galaxy S24 Ultra Violet\" class=\"thumbnail\" data-src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bzvhmea-thumb-537234458\">
+                    <img src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bzgcmea-thumb-537234449\" alt=\"Samsung Galaxy S24 Ultra Green\" class=\"thumbnail\" data-src=\"https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-s928-sm-s928bzgcmea-thumb-537234449\">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class=\"image-zoom-container\" id=\"imageZoomContainer\">
+        <span class=\"close-zoom\" id=\"closeZoom\">&times;</span>
+        <img src=\"\" alt=\"Zoomed image\" class=\"zoomed-image\" id=\"zoomedImage\">
+    </div>
+
+    <section class=\"features\" id=\"features\">
+        <div class=\"container\">
+            <h2 class=\"section-title fade-in\">Key Features</h2>
+            <div class=\"features-grid\">
+                <div class=\"feature-card fade-in\">
+                    <div class=\"feature-icon\">📱</div>
+                    <h3>Titanium Design</h3>
+                    <p>Featuring a durable and lightweight titanium frame with enhanced Armor Aluminum and Corning Gorilla Glass Victus 2.</p>
+                </div>
+                <div class=\"feature-card fade-in\">
+                    <div class=\"feature-icon\">📸</div>
+                    <h3>Pro-Grade Camera</h3>
+                    <p>200MP main camera with advanced nightography capabilities and 8K video recording at 30fps.</p>
+                </div>
+                <div class=\"feature-card fade-in\">
+                    <div class=\"feature-icon\">⚡</div>
+                    <h3>Powerful Performance</h3>
+                    <p>Snapdragon 8 Gen 3 processor with 12GB RAM and up to 1TB storage for lightning-fast performance.</p>
+                </div>
+                <div class=\"feature-card fade-in\">
+                    <div class=\"feature-icon\">🔋</div>
+                    <h3>All-Day Battery</h3>
+                    <p>5,000mAh battery with fast charging and wireless PowerShare technology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class=\"specs\" id=\"specs\">
+        <div class=\"container\">
+            <h2 class=\"section-title fade-in\">Technical Specifications</h2>
+            <div class=\"specs-container\">
+                <div class=\"specs-chart fade-in\">
+                    <h3>Performance Comparison</h3>
+                    <div class=\"chart-container\" id=\"performanceChart\">
+                        <div class=\"bar bar-1\" data-height=\"60%\"></div>
+                        <div class=\"bar bar-2\" data-height=\"75%\"></div>
+                        <div class=\"bar bar-3\" data-height=\"90%\"></div>
+                        <div class=\"bar bar-4\" data-height=\"95%\"></div>
+                    </div>
+                    <div class=\"chart-labels\">
+                        <div class=\"chart-label\">S22 Ultra</div>
+                        <div class=\"chart-label\">S23 Ultra</div>
+                        <div class=\"chart-label\">S24 Ultra</div>
+                        <div class=\"chart-label\">iPhone 15 Pro Max</div>
+                    </div>
+                </div>
+                <div class=\"specs-table fade-in\">
+                    <table>
+                        <tr>
+                            <th>Specification</th>
+                            <th>Details</th>
+                        </tr>
+                        <tr>
+                            <td>Display</td>
+                            <td>6.8\" QHD+ Dynamic AMOLED 2X, 120Hz</td>
+                        </tr>
+                        <tr>
+                            <td>Processor</td>
+                            <td>Snapdragon 8 Gen 3</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td>12GB</td>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>256GB / 512GB / 1TB</td>
+                        </tr>
+                        <tr>
+                            <td>Main Camera</td>
+                            <td>200MP wide + 12MP ultra-wide + 10MP telephoto (3x) + 50MP telephoto (5x)</td>
+                        </tr>
+                        <tr>
+                            <td>Front Camera</td>
+                            <td>12MP</td>
+                        </tr>
+                        <tr>
+                            <td>Battery</td>
+                            <td>5,000mAh</td>
+                        </tr>
+                        <tr>
+                            <td>OS</td>
+                            <td>Android 14 with One UI 6.1</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class=\"reviews\" id=\"reviews\">
+        <div class=\"container\">
+            <h2 class=\"section-title fade-in\">Customer Reviews</h2>
+            <div class=\"reviews-header fade-in\">
+                <div class=\"review-stats\">
+                    <div class=\"rating\">4.8</div>
+                    <div class=\"stars\">★★★★★</div>
+                    <div>(128 reviews)</div>
+                </div>
+                <div class=\"review-filters\">
+                    <button class=\"filter-btn active\" data-rating=\"all\">All</button>
+                    <button class=\"filter-btn\" data-rating=\"5\">5 Stars</button>
+                    <button class=\"filter-btn\" data-rating=\"4\">4 Stars</button>
+                    <button class=\"filter-btn\" data-rating=\"3\">3 Stars</button>
+                    <button class=\"filter-btn\" data-rating=\"2\">2 Stars</button>
+                    <button class=\"filter-btn\" data-rating=\"1\">1 Star</button>
+                </div>
+            </div>
+            <div class=\"reviews-container\" id=\"reviewsContainer\">
+                <div class=\"review-card fade-in\" data-rating=\"5\">
+                    <div class=\"review-header\">
+                        <div class=\"reviewer\">Michael Johnson</div>
+                        <div class=\"review-date\">May 2, 2024</div>
+                    </div>
+                    <div class=\"review-rating\">★★★★★</div>
+                    <div class=\"review-text\">The camera system on the S24 Ultra is absolutely mind-blowing! The 200MP main camera captures incredible detail, and the new AI photo editing features are game-changers. Battery life is excellent too, lasting me through a full day of heavy use.</div>
+                </div>
+                <div class=\"review-card fade-in\" data-rating=\"5\">
+                    <div class=\"review-header\">
+                        <div class=\"reviewer\">Sarah Thompson</div>
+                        <div class=\"review-date\">April 28, 2024</div>
+                    </div>
+                    <div class=\"review-rating\">★★★★★</div>
+                    <div class=\"review-text\">The titanium frame makes this phone feel premium and surprisingly lightweight. The display is gorgeous with perfect color accuracy and brightness. The S Pen is more responsive than ever, making note-taking a breeze.</div>
+                </div>
+                <div class=\"review-card fade-in\" data-rating=\"4\">
+                    <div class=\"review-header\">
+                        <div class=\"reviewer\">David Rodriguez</div>
+                        <div class=\"review-date\">April 25, 2024</div>
+                    </div>
+                    <div class=\"review-rating\">★★★★☆</div>
+                    <div class=\"review-text\">Great phone overall with incredible performance. The only downside is that it's quite expensive, but you get what you pay for. The new AI features are useful but still feel a bit gimmicky at times.</div>
+                </div>
+                <div class=\"review-card fade-in\" data-rating=\"5\">
+                    <div class=\"review-header\">
+                        <div class=\"reviewer\">Jennifer Lee</div>
+                        <div class=\"review-date\">April 20, 2024</div>
+                    </div>
+                    <div class=\"review-rating\">★★★★★</div>
+                    <div class=\"review-text\">Coming from an iPhone, this was a big switch for me, and I couldn't be happier. The customization options are endless, and the camera system blows away anything I've used before. The 5x optical zoom is perfect for capturing distant subjects.</div>
+                </div>
+                <div class=\"review-card fade-in\" data-rating=\"3\">
+                    <div class=\"review-header\">
+                        <div class=\"reviewer\">Robert Williams</div>
+                        <div class=\"review-date\">April 15, 2024</div>
+                    </div>
+                    <div class=\"review-rating\">★★★☆☆</div>
+                    <div class=\"review-text\">The phone is good but heats up quite a bit during gaming sessions. The camera is excellent, but I've noticed some inconsistencies in low-light photography. The battery life is decent but not as good as advertised.</div>
+                </div>
+                <div class=\"review-card fade-in\" data-rating=\"5\">
+                    <div class=\"review-header\">
+                        <div class=\"reviewer\">Emily Parker</div>
+                        <div class=\"review-date\">April 10, 2024</div>
+                    </div
